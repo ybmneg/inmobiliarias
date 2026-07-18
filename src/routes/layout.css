@@ -1,0 +1,84 @@
+@import 'tailwindcss';
+
+/* Tipografías del referente Manzil (auto-alojadas, sin peticiones externas) */
+@import '@fontsource/libre-baskerville/400.css';
+@import '@fontsource/libre-baskerville/400-italic.css';
+@import '@fontsource/libre-baskerville/700.css';
+@import '@fontsource-variable/open-sans';
+
+/* ================================================================== *
+ * NEXUS INMO — Sistema de diseño (lujo claro, inspirado en Manzil)
+ * Un único acento (oro) rebrandeable en bloque.
+ * ================================================================== */
+@theme {
+	/* Tipografía — serif editorial (display) + sans limpia (cuerpo) */
+	--font-display: 'Libre Baskerville', ui-serif, Georgia, serif;
+	--font-sans: 'Open Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+	/* Superficies */
+	--color-canvas: #f9f9f9;
+	--color-surface: #ffffff;
+	--color-ink: #030304;
+
+	/* Acento único: oro cálido */
+	--color-brand-50: #faf5ec;
+	--color-brand-100: #f2e6d0;
+	--color-brand-200: #e6cca0;
+	--color-brand-300: #d9b276;
+	--color-brand-400: #cca063;
+	--color-brand-500: #c09458;
+	--color-brand-600: #a97e46;
+	--color-brand-700: #866339;
+	--color-brand-800: #614831;
+	--color-brand-900: #3f2f21;
+
+	/* Easing (MOTION_INTENSITY 6) */
+	--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+	--ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ *
+ * Capa base
+ * ------------------------------------------------------------------ */
+@layer base {
+	html {
+		background-color: var(--color-canvas);
+		color: #292524; /* stone-800 — cuerpo */
+		font-family: var(--font-sans);
+		scroll-behavior: smooth;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		text-rendering: optimizeLegibility;
+	}
+
+	body {
+		min-height: 100dvh;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-family: var(--font-display);
+		font-weight: 400;
+		letter-spacing: -0.01em;
+		color: var(--color-ink);
+	}
+
+	::selection {
+		background-color: var(--color-brand-500);
+		color: #ffffff;
+	}
+
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: #d6d6d6 transparent;
+	}
+}
+
+/* Respeta la preferencia de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
