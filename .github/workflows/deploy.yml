@@ -41,3 +41,7 @@ jobs:
           local-dir: ./build/
           # Carpeta destino en el servidor (docroot del subdominio). DEBE acabar en /.
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          # LIMPIEZA UNICA: borra todo lo que hubiera en la carpeta destino antes de
+          # subir (elimina la carpeta 'C:' erronea del primer intento y el default.php).
+          # Se quitara tras el primer deploy limpio para volver a subida incremental.
+          dangerous-clean-slate: true
