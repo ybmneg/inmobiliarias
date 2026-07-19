@@ -1,0 +1,43 @@
+name: Deploy a Hostinger
+
+# Cada push a main compila la web y sube la carpeta build/ a Hostinger por FTP.
+# tambien se puede lanzar a mano desde la pestaña Actions (workflow_dispatch).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Evita despliegues solapados si haces varios push seguidos.
+concurrency:
+  group: deploy-hostinger
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Compilar la web estática (adapter-static -> build/)
+        run: npm run build
+
+      - name: Subir build/ a Hostinger por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Carpeta local que se sube (salida de adapter-static).
+          local-dir: ./build/
+          # Carpeta destino en el servidor (docroot del subdominio). DEBE acabar en /.
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
